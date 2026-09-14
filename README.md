@@ -14,3 +14,7 @@ Trabalho da disciplina TI0111 - Estatística para Engenharia.
 - figures: gráficos produzidos
 - tables: tabelas produzidas
 - report: relatório final
+
+## Contribuições
+
+to be completed
