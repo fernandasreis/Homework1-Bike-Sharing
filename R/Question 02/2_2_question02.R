@@ -27,4 +27,12 @@ modefunc(data_group10$casual) #413 :mas não há moda!
 mean(data_group10$registered) #2099.1
 median(data_group10$registered) #2174
 any(duplicated(data_group10$registered)) #FALSE
-modefunc(data_group10$registered) #2395 :sem moda!
+modefunc(data_group10$registered) #2395 :mas não há moda!
+
+#PARA O DATA_GROUP INTEIRO ----------------------------------------------
+
+#temp
+mean(data_group$temp) #21.795
+median(data_group$temp) #22.15
+any(duplicated(data_group$temp)) #TRUE 
+modefunc(data_group$temp) #26 :moda real
