@@ -8,7 +8,7 @@ modefunc <- function(x){
   return(valor_moda) 
 }
 
-#PARA VERIFICAÇÃO DOS CÁLCULOS MANUAIS
+#PARA VERIFICAÇÃO DOS CÁLCULOS MANUAIS ----------------------------------------------
 data_group10 <- data_group[1:10, ]
 
 #temp (10 primeiros)
@@ -22,3 +22,9 @@ mean(data_group10$casual) #571.5
 median(data_group10$casual) #550
 any(duplicated(data_group10$casual)) #FALSE
 modefunc(data_group10$casual) #413 :mas não há moda!
+
+#registered (10 primeiros)
+mean(data_group10$registered) #2099.1
+median(data_group10$registered) #2174
+any(duplicated(data_group10$registered)) #FALSE
+modefunc(data_group10$registered) #2395 :sem moda!
