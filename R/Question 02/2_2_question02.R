@@ -42,3 +42,9 @@ mean(data_group$casual) #766.6633
 median(data_group$casual) #677
 any(duplicated(data_group$casual)) #TRUE
 modefunc(data_group$casual) #775 :moda real
+
+#registered
+mean(data_group$registered) #3140.84
+median(data_group$registered) #3308
+any(duplicated(data_group$registered)) #TRUE
+modefunc(data_group$registered) #1707 :moda real
