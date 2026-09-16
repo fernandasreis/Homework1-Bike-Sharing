@@ -36,3 +36,9 @@ mean(data_group$temp) #21.795
 median(data_group$temp) #22.15
 any(duplicated(data_group$temp)) #TRUE 
 modefunc(data_group$temp) #26 :moda real
+
+#casual
+mean(data_group$casual) #766.6633
+median(data_group$casual) #677
+any(duplicated(data_group$casual)) #TRUE
+modefunc(data_group$casual) #775 :moda real
