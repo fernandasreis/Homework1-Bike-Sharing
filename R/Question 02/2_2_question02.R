@@ -16,3 +16,9 @@ mean(data_group10$temp) #17.86
 median(data_group10$temp) #17.7
 any(duplicated(data_group10$temp)) #FALSE 
 modefunc(data_group10$temp) #16 :mas não há moda!
+
+#casual (10 primeiros)
+mean(data_group10$casual) #571.5
+median(data_group10$casual) #550
+any(duplicated(data_group10$casual)) #FALSE
+modefunc(data_group10$casual) #413 :mas não há moda!
