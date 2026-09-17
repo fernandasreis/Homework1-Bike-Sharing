@@ -1,3 +1,5 @@
+data_group$total_user <- data_group$casual + data_group$registered
+
 modefunc <- function(x){ 
   valores_unicos <- unique(x) 
   posicoes <- match(x,valores_unicos) 
@@ -29,6 +31,12 @@ median(data_group10$registered) #2174
 any(duplicated(data_group10$registered)) #FALSE
 modefunc(data_group10$registered) #2395 :mas não há moda!
 
+#total_user(10 primeiros)
+mean(data_group10$total_user) #2670.7
+median(data_group10$total_user) #2851.5
+any(duplicated(data_group10$total_user)) #FALSE
+modefunc(data_group10$total_user) #2808 :mas não há moda!
+
 #PARA O DATA_GROUP INTEIRO ----------------------------------------------
 
 #temp
@@ -48,3 +56,9 @@ mean(data_group$registered) #3140.84
 median(data_group$registered) #3308
 any(duplicated(data_group$registered)) #TRUE
 modefunc(data_group$registered) #1707 :moda real
+
+#total_user
+mean(data_group$total_user) #3907.503
+median(data_group$total_user) #4098
+any(duplicated(data_group$total_user)) #TRUE
+modefunc(data_group$total_user) #5312: moda real
