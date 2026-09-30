@@ -1,45 +1,38 @@
-# 1. CARREGAR O CONJUNTO DE DADOS ORIGINAL #
+# carregar conjunto de dados #
 
 data <- read.csv(file.choose())
-
 
 # 2. DEFINIR A MAIOR MATRÍCULA DO GRUPO #
 
 M <- 582795%
 
-
-# 3. CALCULAR r #
+# calcular r #
 
 r <- 1 + (M %% 100)
 
 print(r)
 
-# 4. CONSTRUIR O CONJUNTO DE DADOS DO GRUPO # 
-
 data_group <- data[r:(r + 299), ]
 
-
-# Conferir o número de observações
+# num de observações
 nrow(data_group)
 
 
-# Conferir as primeiras observações
+# conferir primeiras observações
 head(data_group)
 
 
-# Conferir as últimas observações
+# conferir últimas observações
 tail(data_group)
 
 
-# 5. CRIAR A VARIÁVEL total_user #
+# criar total_user #
 
 data_group$total_user <- data_group$casual + data_group$registered
 
-
-# Conferir a nova variável
 head(data_group$total_user)
 
-# 6. MEDIDAS ESTATÍSTICAS # 
+# medidas úteis # 
 
 media <- mean(data_group$total_user)
 mediana <- median(data_group$total_user)
@@ -49,8 +42,6 @@ minimo <- min(data_group$total_user)
 maximo <- max(data_group$total_user)
 amplitude <- maximo - minimo
 
-
-# Mostrar os resultados
 media
 mediana
 variancia
@@ -59,28 +50,26 @@ minimo
 maximo
 amplitude
 
-# 7. RESUMO ESTATÍSTICO #
+# resumo #
 
 summary(data_group$total_user)
 
-# 8. HISTOGRAMA # 
+# criação do histograma # 
 
 hist(data_group$total_user,
      main = "Histograma do Total de Usuários",
      xlab = "Total de usuários por dia",
      ylab = "Frequência")
 
-# 9. BOXPLOT # 
+# criação do boxplot # 
 
 boxplot(data_group$total_user,
         main = "Boxplot do Total de Usuários",
-        ylab = "Total de usuários por dia")
-
-# 10. IDENTIFICAÇÃO DE POSSÍVEIS OUTLIERS # 
+        ylab = "Total de usuários por dia") 
 
 boxplot.stats(data_group$total_user)
 
-# 11. HISTOGRAMA E BOXPLOT LADO A LADO # 
+# histograma e boxplot juntos # 
 
 par(mfrow = c(1, 2))
 
