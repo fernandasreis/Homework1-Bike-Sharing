@@ -4,7 +4,7 @@ data <- read.csv(file.choose())
 
 # 2. DEFINIR A MAIOR MATRÍCULA DO GRUPO #
 
-M <- 582795%
+M <- 582795
 
 # calcular r #
 
