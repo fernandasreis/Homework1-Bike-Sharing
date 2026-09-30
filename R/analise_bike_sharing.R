@@ -1,16 +1,16 @@
-# =====================================================================
+
 # Homework 1 - Bike Sharing
 # Script unificado: Questões 1 a 4
-#
+
 # Dependências: R (>= 4.0) e os pacotes dplyr, ggplot2 e scales
 #   install.packages(c("dplyr", "ggplot2", "scales"))
-#
+
 # Execução: defina a pasta raiz do repositório como diretório de trabalho
 # (a que contém as pastas data/ e R/) e rode:
 #   source("R/analise_bike_sharing.R", echo = TRUE, encoding = "UTF-8")
 # Entrada: data/HW1_bike_sharing.csv
 # Saída:   figuras em figures/final/
-# =====================================================================
+
 
 library(dplyr)
 library(ggplot2)
@@ -24,9 +24,9 @@ salvar <- function(grafico, nome, largura = 8, altura = 5) {
          width = largura, height = altura, dpi = 300, bg = "white")
 }
 
-# ---------------------------------------------------------------------
+
 # QUESTÃO 1 - Construção do conjunto de dados do grupo
-# ---------------------------------------------------------------------
+
 original <- read.csv(file.path("data", "HW1_bike_sharing.csv"))
 
 M <- 582795                 # maior número de matrícula do grupo
@@ -44,7 +44,7 @@ data_group$dteday     <- as.Date(data_group$dteday)
 
 # Rótulos das variáveis categóricas
 # Estações: rótulos na ordem do enunciado (1 = primavera, 2 = verão,
-# 3 = outono, 4 = inverno). Pelas datas, o código 1 cobre 21/12 a 20/03.
+# 3 = outono, 4 = inverno).
 data_group$estacao <- factor(data_group$season, levels = 1:4,
                              labels = c("Primavera", "Verão", "Outono", "Inverno"))
 data_group$clima   <- factor(data_group$weathersit, levels = 1:4,
@@ -53,9 +53,9 @@ data_group$clima   <- factor(data_group$weathersit, levels = 1:4,
 
 amostra10 <- head(data_group, 10)   # usada nos cálculos manuais
 
-# ---------------------------------------------------------------------
+
 # QUESTÃO 2.1 - Tipos de variáveis, categorias e valores ausentes
-# ---------------------------------------------------------------------
+
 str(data_group[, c("instant", "dteday", "season", "weathersit",
                    "temp", "casual", "registered")])
 cat("Período:", format(min(data_group$dteday)), "a",
@@ -65,9 +65,9 @@ print(table(data_group$clima))
 cat("Valores ausentes por variável:\n")
 print(colSums(is.na(data_group)))
 
-# ---------------------------------------------------------------------
+
 # QUESTÃO 2.2 - Medidas de tendência central
-# ---------------------------------------------------------------------
+
 moda <- function(x) {
   f <- table(x)
   if (max(f) == 1) return("sem moda")
@@ -87,10 +87,9 @@ tendencia_central <- function(df) {
 cat("\n== 2.2: 10 observações ==\n");  print(tendencia_central(amostra10))
 cat("\n== 2.2: 300 observações ==\n"); print(tendencia_central(data_group))
 
-# ---------------------------------------------------------------------
-# QUESTÃO 2.3 - Quartis, IQR e valores atípicos de total_user
-# (quantile() usa o método type = 7, padrão do R)
-# ---------------------------------------------------------------------
+
+# QUESTÃO 2.3 - Quartis, IQR 
+
 quartis_iqr <- function(x) {
   q <- quantile(x, c(0.25, 0.50, 0.75))
   iqr <- q[[3]] - q[[1]]
@@ -106,9 +105,9 @@ atipicos <- data_group %>%
   select(dteday, total_user, clima, estacao, temp)
 cat("Valores atípicos:", nrow(atipicos), "\n"); print(atipicos)
 
-# ---------------------------------------------------------------------
-# QUESTÃO 2.4 - Histograma e boxplot de total_user
-# ---------------------------------------------------------------------
+
+# qUESTÃO 2.4  Histograma e boxplot de total_user
+
 cat("\n== 2.4 ==\n")
 cat("Média:", mean(data_group$total_user),
     "| Mediana:", median(data_group$total_user),
@@ -136,9 +135,9 @@ g_box <- ggplot(data_group, aes(x = "", y = total_user)) +
   theme_minimal()
 salvar(g_box, "q2_4_boxplot.png", largura = 5)
 
-# ---------------------------------------------------------------------
-# QUESTÃO 2.5 - Variável low_usage
-# ---------------------------------------------------------------------
+
+# 2.5 - Variável low_usage
+
 Q1 <- quantile(data_group$total_user, 0.25)
 data_group$low_usage <- as.integer(data_group$total_user < Q1)
 amostra10 <- head(data_group, 10)
@@ -146,9 +145,9 @@ cat("\n== 2.5 ==\nQ1 =", Q1, "| dias low_usage =", sum(data_group$low_usage),
     "| proporção =", mean(data_group$low_usage), "\n")
 cat("low_usage nas 10 primeiras:", sum(amostra10$low_usage), "de 10\n")
 
-# ---------------------------------------------------------------------
-# QUESTÃO 3 - Função de resumo por grupo
-# ---------------------------------------------------------------------
+
+# Q3 - Função de resumo por grupo
+
 resumo_grupo <- function(df, grupo) {
   df %>%
     group_by({{ grupo }}) %>%
@@ -162,7 +161,7 @@ resumo_grupo <- function(df, grupo) {
     as.data.frame()
 }
 
-# 3.1 - Estações
+# 3.1  Estações
 cat("\n== 3.1: 10 observações ==\n");  print(resumo_grupo(amostra10, estacao))
 res_estacao <- resumo_grupo(data_group, estacao)
 cat("\n== 3.1: 300 observações ==\n"); print(res_estacao)
@@ -174,7 +173,7 @@ g31 <- ggplot(data_group, aes(estacao, total_user, fill = estacao)) +
   theme_minimal() + theme(legend.position = "none")
 salvar(g31, "q3_1_boxplot_estacao.png")
 
-# 3.2 - Condições meteorológicas
+# 3.2  Condições meteorológicas
 cat("\n== 3.2: 10 observações ==\n");  print(resumo_grupo(amostra10, clima))
 res_clima <- resumo_grupo(data_group, clima)
 cat("\n== 3.2: 300 observações ==\n"); print(res_clima)
@@ -198,7 +197,7 @@ g32b <- ggplot(res_clima, aes(clima, prop_low, fill = clima)) +
   theme_minimal() + theme(legend.position = "none")
 salvar(g32b, "q3_2_prop_low_clima.png")
 
-# 3.3 - Temperatura x total_user
+# 3.3  Temperatura x total_user
 cat("\n== 3.3 ==\n")
 cat("Correlação (10 obs):",  cor(amostra10$temp, amostra10$total_user), "\n")
 cat("Correlação (300 obs):", cor(data_group$temp, data_group$total_user), "\n")
@@ -210,14 +209,14 @@ g33 <- ggplot(data_group, aes(temp, total_user)) +
   theme_minimal()
 salvar(g33, "q3_3_dispersao.png")
 
-# 3.4 - Temperatura média por estação (apoio à justificativa)
+# 3.4  Temperatura média por estação 
 cat("\n== 3.4 ==\n")
 print(as.data.frame(data_group %>% group_by(estacao) %>%
   summarise(temp_media = mean(temp), media_usuarios = mean(total_user))))
 
-# ---------------------------------------------------------------------
-# QUESTÃO 4.1 - Série temporal
-# ---------------------------------------------------------------------
+
+# 4.1 Série temporal
+
 cat("\n== 4.1 ==\n")
 print(as.data.frame(data_group %>%
   group_by(mes = format(dteday, "%Y-%m")) %>%
@@ -235,9 +234,9 @@ g41 <- ggplot(data_group, aes(dteday, total_user)) +
   theme_minimal()
 salvar(g41, "q4_1_serie_temporal.png", largura = 10)
 
-# ---------------------------------------------------------------------
-# QUESTÃO 4.2 - Temperatura (faixas) e condição meteorológica (quartis)
-# ---------------------------------------------------------------------
+
+# Q 4.2  Temperatura  e condição meteorológica
+
 data_group$faixa_temp <- cut(data_group$temp, breaks = c(0, 10, 15, 20, 25, 30, 40))
 amostra10 <- head(data_group, 10)
 
@@ -275,9 +274,9 @@ g42b <- ggplot(q_clima, aes(clima, mediana)) +
   theme_minimal()
 salvar(g42b, "q4_2_mediana_clima.png")
 
-# ---------------------------------------------------------------------
-# QUESTÃO 4.3 - Temperatura x total_user por grupo de low_usage
-# ---------------------------------------------------------------------
+
+#  4.3 - Temperatura x total_user por grupo de low_usage
+
 data_group$grupo <- factor(data_group$low_usage, levels = c(0, 1),
                            labels = c("Demais dias", "low_usage"))
 amostra10 <- head(data_group, 10)
